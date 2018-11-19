@@ -46,8 +46,10 @@ namespace les0
                 isOnPause = true;
                 StartToolStripMenuItem.Text = "Продолжить";
                 ExitToolStripMenuItem.Text = "Выход в меню";
-                Game.timer.Stop();
                 label1.Visible = true;
+                Game.timer.Stop();
+                
+                Game.Draw();
             }
             else if(isRunning && isOnPause)
             {

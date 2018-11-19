@@ -4,14 +4,20 @@ using System.Drawing;
 namespace les0
 
 {
-	class BaseObject
+	abstract class BaseObject : ICollision
 	{
 		protected Point Pos;
 		protected Point Dir;
 		protected Size Size;
         protected int Ind;
         public Random rnd = new Random();
-        public BaseObject(Point pos, Point dir, Size size, int ind)
+        // Так как переданный объект тоже должен будет реализовывать интерфейс ICollision, мы 
+        // можем использовать его свойство Rect и метод IntersectsWith для обнаружения пересечения с
+        // нашим объектом (а можно наоборот)
+        
+        public Rectangle Rect {  get { return new Rectangle(Pos, Size); } }
+        public bool Collision(ICollision o) { return o.Rect.IntersectsWith(this.Rect); }
+        protected BaseObject(Point pos, Point dir, Size size, int ind)
 		{
 			Pos = pos;
 			Dir = dir;
@@ -21,10 +27,8 @@ namespace les0
         /// <summary>
         /// Метод отрисовки объектов
         /// </summary>
-		public virtual void ObjDraw()
-		{
-			Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
-		}
+        public abstract void ObjDraw();
+		
         /// <summary>
         /// Метод поворота изображения на заданный угол
         /// </summary>

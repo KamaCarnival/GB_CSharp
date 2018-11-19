@@ -2,21 +2,25 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
+using System.Collections;
 namespace les0
 {
     static class Game
     {
         private static BufferedGraphicsContext _context;
+        private static Bullet _bullet;
+        private static Asteroid[] _asteroids;
         public static BufferedGraphics Buffer;
         public static Timer timer;
+        static Image background = Image.FromFile(Path.Combine(Application.StartupPath, @"..\..\images\galaxy.gif"));
+
         static Random r = new Random();
 
         // Свойства
         // Ширина и высота игрового поля
         public static int Width { get; set; }
         public static int Height { get; set; }
-        static Image background = Image.FromFile(Path.Combine(Application.StartupPath, @"..\..\images\galaxy.gif"));
-
+        
         static Game()
         {
         }
@@ -49,13 +53,16 @@ namespace les0
         /// </summary>
 		public static void Load()
         {
-            _objs = new BaseObject[50];
+            _objs = new BaseObject[40];
+            _bullet = new Bullet(new Point(200, 200), new Point(5, 5), new Size(20, 20), 0);
+            _asteroids = new Asteroid[15];
+    
             //звёзды
-            for (int i = 0; i < _objs.Length / 2; i++)
+            for (int i = 0; i < _objs.Length; i++)
                 _objs[i] = new Star(new Point(r.Next(10, Height-10), r.Next(10, Width-10)), new Point(3,10), new Size(20, 20), i);
             //астероиды
-            for (int i = Convert.ToInt32(_objs.Length / 2) ; i < _objs.Length; i++)
-                _objs[i] = new Asteroid(new Point(r.Next(10, Height-10), r.Next(10, Width-10)), new Point(5,20), new Size(50, 50), i);
+            for (int i = 0; i < _asteroids.Length; i++)
+                _asteroids[i] = new Asteroid(new Point(r.Next(10, Height - 10), r.Next(10, Width - 10)), new Point(5, 20), new Size(50, 50), i);
 
         }
         /// <summary>
@@ -80,7 +87,10 @@ namespace les0
 
             foreach (BaseObject obj in _objs)
 				obj.ObjDraw();
-			Buffer.Render();
+            foreach (BaseObject astr in _asteroids)
+                astr.ObjDraw();
+            _bullet.ObjDraw();
+            Buffer.Render();
 		}
 
         /// <summary>
@@ -90,6 +100,12 @@ namespace les0
 		{
 			foreach (BaseObject obj in _objs)
 				obj.ObjUpdate();
+            foreach (BaseObject astr in _asteroids)
+            {
+                astr.ObjUpdate();
+                if (astr.Collision(_bullet)) { System.Media.SystemSounds.Hand.Play(); }
+            }
+            _bullet.ObjUpdate();
 		}
 	}
 }

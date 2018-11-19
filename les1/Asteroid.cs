@@ -11,8 +11,10 @@ namespace les0
 {
     class Asteroid : BaseObject
     {
+        public int Power { get; set; }
         public Asteroid(Point pos, Point dir, Size size, int ind) : base(pos, dir, size, ind)
         {
+            Power = 1;
         }
 
         static Image[] AsteroidsImg = {
