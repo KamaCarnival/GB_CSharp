@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 namespace les0
 {
     static class Game
@@ -14,7 +15,7 @@ namespace les0
         // Ширина и высота игрового поля
         public static int Width { get; set; }
         public static int Height { get; set; }
-        static Image background = Image.FromFile(Application.StartupPath + @"\images\galaxy.gif");
+        static Image background = Image.FromFile(Path.Combine(Application.StartupPath, @"..\..\images\galaxy.gif"));
 
         static Game()
         {

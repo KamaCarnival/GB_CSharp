@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace les0
 {
@@ -13,7 +14,7 @@ namespace les0
 		public Star(Point pos, Point dir, Size size, int ind) : base(pos, dir, size, ind)
 		{
 		}
-        Image starImg = Image.FromFile(Application.StartupPath +@"\images\star_small.png");
+        Image starImg = Image.FromFile(Path.Combine(Application.StartupPath, @"..\..\images\star_small.png"));
 		public override void ObjDraw()
 		{
 		    Game.Buffer.Graphics.DrawImage(starImg , Pos.X, Pos.Y,10, 10);

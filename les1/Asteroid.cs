@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace les0
 {
@@ -15,9 +16,9 @@ namespace les0
         }
 
         static Image[] AsteroidsImg = {
-                                Image.FromFile(Application.StartupPath + @"\images\asteroid1_small.png"),
-                                Image.FromFile(Application.StartupPath + @"\images\asteroid2_small.png"),
-                                Image.FromFile(Application.StartupPath + @"\images\asteroid3_small.png")
+                                Image.FromFile(Path.Combine(Application.StartupPath, @"..\..\images\asteroid1_small.png")),
+                                Image.FromFile(Path.Combine(Application.StartupPath, @"..\..\images\asteroid2_small.png")),
+                                Image.FromFile(Path.Combine(Application.StartupPath, @"..\..\images\asteroid3_small.png"))
                                 };
 
 
